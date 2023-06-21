@@ -1,8 +1,28 @@
-import animateTitle from './features/animateTitle'
-import createBadge from './features/createBasge'
-import './styles/style.css'
+/*eslint-disable no-unused-vars*/
+import { gsap, ScrollTrigger } from 'gsap/all'
+import SplitType from 'split-type'
 
-console.log('Welcome to Vite + JS + Webflow!')
+gsap.registerPlugin(ScrollTrigger)
+//Captura e envolve todos os caracteres em spans/divs
+const sliceText = new SplitType('[text-split]', {
+  types: 'words chars',
+  tagName: 'span',
+})
 
-createBadge()
-animateTitle()
+let wordsSlidesUp = document.querySelectorAll('[words-slide-up]')
+
+wordsSlidesUp.forEach((element) => {
+  let tl = gsap.timeline({ paused: true, defaults: { duration: 1 } })
+  let onlyChar = element.querySelectorAll('.char')
+
+  tl.from(
+    onlyChar,
+
+    {
+      opacity: 0,
+      yPercent: 100,
+      stagger: { amount: 0.4 },
+      ease: 'expo.InOut',
+    }
+  )
+})
